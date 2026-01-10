@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thy Consciousness Revealed</title>
+  <link rel="stylesheet" href="results.css">
+</head>
+<body>
+  <div class="container">
+    <div id="loading" class="loading">
+      <div class="loader"></div>
+      <p>The scribes prepare thy chronicle...</p>
+    </div>
+
+    <div id="main-content" class="hidden">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-crest">
+          <svg class="emblem-large" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="32" cy="32" r="28"/>
+            <circle cx="32" cy="32" r="20"/>
+            <path d="M32 4v12M32 48v12M4 32h12M48 32h12"/>
+            <path d="M11 11l8.5 8.5M44.5 44.5l8.5 8.5M11 53l8.5-8.5M44.5 19.5l8.5-8.5"/>
+            <circle cx="32" cy="32" r="6"/>
+          </svg>
+        </div>
+        <h1>Consciousness Revealed</h1>
+        <p class="subtitle">A reading from <span id="bookmark-count">0</span> saved scrolls</p>
+      </header>
+
+      <!-- Archetype Hero -->
+      <section class="section archetype-hero">
+        <div id="archetype-emblem" class="emblem-hero"></div>
+        <div class="archetype-prefix">Thou Art</div>
+        <h2 class="archetype-name" id="archetype-name">The Seeker</h2>
+        <p class="archetype-description" id="archetype-description"></p>
+        <p class="secondary-archetype" id="secondary-archetype"></p>
+      </section>
+
+      <!-- Core Narrative -->
+      <section class="section narrative-section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 6h20v24H6z"/><path d="M10 2v4M22 2v4"/><path d="M10 12h12M10 17h12M10 22h8"/>
+          </svg>
+          The Chronicle Speaks
+        </h3>
+        <p class="narrative-text" id="core-narrative"></p>
+      </section>
+
+      <div class="divider">
+        <div class="divider-inner">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 4l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Core Motivation & Drives -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 4v6M16 22v6M4 16h6M22 16h6"/><circle cx="16" cy="16" r="8"/><circle cx="16" cy="16" r="3"/>
+          </svg>
+          Core Drives
+        </h3>
+        <p class="section-subtitle">The forces that animate thy curation</p>
+        <ul class="drives-list" id="drives-list"></ul>
+        <div class="motivations-grid" id="motivations-list"></div>
+      </section>
+
+      <!-- Psychological Dimensions -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="4" y="4" width="24" height="24" rx="2"/><path d="M4 12h24M12 4v24"/>
+          </svg>
+          Psychological Dimensions
+        </h3>
+        <div id="dimensions-grid" class="dimensions-grid"></div>
+      </section>
+
+      <!-- Cognitive Style -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="12" r="8"/><path d="M8 28c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            <path d="M12 10v4M20 10v4M13 15c1.5 1 3.5 1 5 0"/>
+          </svg>
+          Cognitive Architecture
+        </h3>
+        <div class="cognitive-header">
+          <div class="cog-mode">
+            <span class="cog-label">Primary Mode</span>
+            <span class="cog-value" id="cognitive-primary">—</span>
+          </div>
+          <div class="cog-mode">
+            <span class="cog-label">Secondary Mode</span>
+            <span class="cog-value" id="cognitive-secondary">—</span>
+          </div>
+        </div>
+        <p class="section-insight" id="cognitive-insight"></p>
+        <div class="style-bars" id="cognitive-bars"></div>
+      </section>
+
+      <!-- Emotional Landscape -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 28c-6.6 0-12-5.4-12-12C4 9.4 9.4 4 16 4c3.3 0 6.3 1.3 8.5 3.5"/>
+            <path d="M16 8v8l5 5"/>
+          </svg>
+          Emotional Landscape
+        </h3>
+        <div class="emotional-header">
+          <span class="emotional-label">Overall Valence:</span>
+          <span class="emotional-value" id="emotional-valence">—</span>
+        </div>
+        <p class="section-insight" id="emotional-insight"></p>
+        <div class="themes-container" id="emotional-themes"></div>
+      </section>
+
+      <!-- Intellectual Character -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 4h16v6H8z"/><path d="M6 10h20v18H6z"/><path d="M10 14h12M10 18h12M10 22h8"/>
+          </svg>
+          Intellectual Character
+        </h3>
+        <div class="int-grid">
+          <div class="int-item">
+            <span class="int-label">Identity</span>
+            <span class="int-value" id="intellectual-identity">—</span>
+          </div>
+          <div class="int-item">
+            <span class="int-label">Rigor</span>
+            <span class="int-value" id="intellectual-rigor">—</span>
+          </div>
+          <div class="int-item">
+            <span class="int-label">Learning Style</span>
+            <span class="int-value" id="intellectual-style">—</span>
+          </div>
+        </div>
+        <p class="section-insight" id="intellectual-insight"></p>
+        <div class="int-scores" id="intellectual-bars"></div>
+      </section>
+
+      <!-- Social Orientation -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="10" r="6"/><circle cx="8" cy="24" r="4"/><circle cx="24" cy="24" r="4"/>
+            <path d="M16 16v4M12 20l-2 2M20 20l2 2"/>
+          </svg>
+          Social Orientation
+        </h3>
+        <div class="social-grid">
+          <div class="social-item">
+            <span class="social-label">Stance</span>
+            <span class="social-value" id="social-stance">—</span>
+          </div>
+          <div class="social-item">
+            <span class="social-label">Authority</span>
+            <span class="social-value" id="authority-orientation">—</span>
+          </div>
+          <div class="social-item">
+            <span class="social-label">Discovery</span>
+            <span class="social-value" id="content-discovery">—</span>
+          </div>
+        </div>
+        <p class="section-insight" id="social-insight"></p>
+      </section>
+
+      <!-- Hidden Patterns -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="16" r="12"/><circle cx="16" cy="16" r="6"/><circle cx="16" cy="16" r="2"/>
+          </svg>
+          Hidden Patterns
+        </h3>
+        <p class="section-subtitle">What thy bookmarks reveal beneath the surface</p>
+        <div class="patterns-grid" id="hidden-patterns"></div>
+      </section>
+
+      <!-- Blind Spots -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="16" r="10"/><circle cx="16" cy="16" r="4"/>
+            <path d="M4 4l24 24" stroke-width="2"/>
+          </svg>
+          Blind Spots
+        </h3>
+        <p class="section-subtitle">Areas that may benefit from exploration</p>
+        <div class="spots-grid" id="blind-spots"></div>
+      </section>
+
+      <!-- Trusted Voices -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M16 4l4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z"/>
+          </svg>
+          Trusted Voices
+        </h3>
+        <div class="authors-list" id="authors-list"></div>
+      </section>
+
+      <!-- Temporal Patterns -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="16" r="12"/><path d="M16 8v8l6 4"/>
+          </svg>
+          Temporal Rhythms
+        </h3>
+        <div class="temporal-header">
+          <span class="temporal-pattern" id="temporal-pattern">—</span>
+        </div>
+        <p class="section-insight" id="temporal-insight"></p>
+        <div class="hourly-chart" id="hourly-chart"></div>
+      </section>
+
+      <!-- Information Diet -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 28V12l8-8 8 8v16H8z"/><path d="M12 28v-8h8v8"/>
+          </svg>
+          Information Diet
+        </h3>
+        <div class="diet-grid">
+          <div class="diet-item">
+            <span class="diet-label">Format</span>
+            <span class="diet-value" id="diet-format">—</span>
+          </div>
+          <div class="diet-item">
+            <span class="diet-label">Visual</span>
+            <span class="diet-value" id="diet-visual">—</span>
+          </div>
+          <div class="diet-item">
+            <span class="diet-label">Sources</span>
+            <span class="diet-value" id="diet-diversity">—</span>
+          </div>
+        </div>
+        <p class="section-insight" id="diet-insight"></p>
+        <div class="domains-list" id="top-domains"></div>
+      </section>
+
+      <!-- Vocabulary -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 8h24M4 16h18M4 24h12"/>
+          </svg>
+          Lexical Signature
+        </h3>
+        <div class="word-cloud" id="word-cloud"></div>
+        <div class="hashtags-list" id="hashtags-list"></div>
+      </section>
+
+      <!-- Summary -->
+      <section class="section">
+        <h3 class="section-title">
+          <svg class="emblem" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="4" y="4" width="24" height="24"/><path d="M4 12h24M12 4v24"/>
+          </svg>
+          Chronicle Summary
+        </h3>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <span class="summary-number" id="total-bookmarks">0</span>
+            <span class="summary-label">Scrolls Analyzed</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-number" id="unique-authors">0</span>
+            <span class="summary-label">Voices Followed</span>
+          </div>
+          <div class="summary-card">
+            <span class="summary-number" id="time-span">—</span>
+            <span class="summary-label">Time Span</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-ornament">
+          <svg class="emblem-large" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1">
+            <path d="M32 8l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z"/>
+          </svg>
+        </div>
+        <p id="analysis-date">Chronicle inscribed</p>
+        <div class="footer-actions">
+          <button id="btn-new" class="btn-action">New Analysis</button>
+          <button id="btn-export" class="btn-action">Export</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="results.js"></script>
+</body>
+</html>

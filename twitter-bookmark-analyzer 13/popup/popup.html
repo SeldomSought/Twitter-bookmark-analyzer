@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consciousness Analyzer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-emblem">
+        <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="32" cy="32" r="24"/>
+          <circle cx="32" cy="32" r="16"/>
+          <circle cx="32" cy="32" r="6"/>
+          <path d="M32 8v8M32 48v8M8 32h8M48 32h8"/>
+        </svg>
+      </div>
+      <h1>Consciousness</h1>
+      <p>Bookmark Analysis</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="analyze">Analyze</button>
+      <button class="nav-tab" data-tab="history">Chronicles</button>
+    </nav>
+
+    <!-- Analyze Tab -->
+    <div id="tab-analyze" class="tab-content active">
+      <!-- Idle State -->
+      <div id="state-idle" class="state-screen active">
+        <div class="idle-message">
+          <p>Transform thy bookmarks into deep psychological insight</p>
+        </div>
+        
+        <div id="last-analysis" class="last-analysis" style="display:none">
+          <div class="last-analysis-label">Last Chronicle</div>
+          <div class="last-analysis-count"><span id="last-count">0</span> scrolls</div>
+          <div class="last-analysis-date" id="last-date"></div>
+        </div>
+        
+        <button id="btn-start" class="btn-primary">Begin Analysis</button>
+        <button id="btn-view-last" class="btn-secondary" style="display:none">View Last Results</button>
+      </div>
+
+      <!-- Running State -->
+      <div id="state-running" class="state-screen">
+        <div class="status-display">
+          <div class="status-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="16" cy="16" r="12"/>
+              <path d="M16 8v8l5 3"/>
+            </svg>
+          </div>
+          <div class="status-text" id="status-text">Initializing...</div>
+          <div class="status-count" id="bookmark-count">0</div>
+          <div class="status-label">scrolls captured</div>
+          <div class="elapsed-time" id="elapsed-time"></div>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+        
+        <div class="topics-preview" id="topics-preview" style="display:none">
+          <div class="topics-label">Emerging Themes</div>
+          <div class="topics-list" id="topics-list"></div>
+        </div>
+        
+        <button id="btn-stop" class="btn-stop">Stop & Generate Results</button>
+        <div class="stop-note">End early and analyze what has been gathered</div>
+      </div>
+
+      <!-- Complete State -->
+      <div id="state-complete" class="state-screen">
+        <div class="complete-message">
+          <div class="complete-icon">
+            <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="32" cy="32" r="24"/>
+              <path d="M22 32l7 7 14-14"/>
+            </svg>
+          </div>
+          <p>Thy chronicle is complete</p>
+        </div>
+        
+        <div class="complete-stats">
+          <div class="stat-item">
+            <span class="stat-label">Scrolls analyzed</span>
+            <span class="stat-value" id="complete-count">0</span>
+          </div>
+        </div>
+        
+        <button id="btn-view" class="btn-primary">View Thy Chronicle</button>
+        <button id="btn-new" class="btn-secondary">New Analysis</button>
+      </div>
+
+      <!-- Error State -->
+      <div id="state-error" class="state-screen">
+        <div class="error-message">
+          <div class="error-icon">
+            <svg width="40" height="40" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="32" cy="32" r="24"/>
+              <path d="M32 20v16M32 44v4"/>
+            </svg>
+          </div>
+          <p class="error-text" id="error-text">An error has occurred</p>
+        </div>
+        <button id="btn-retry" class="btn-primary">Try Again</button>
+      </div>
+    </div>
+
+    <!-- History Tab -->
+    <div id="tab-history" class="tab-content">
+      <div id="history-list"></div>
+      <p id="history-empty" style="text-align:center;color:var(--text-muted);font-style:italic;padding:20px">
+        No chronicles yet. Run thy first analysis.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="#" class="footer-link" id="link-history">Past Chronicles</a>
+      <a href="#" class="footer-link" id="link-about">About</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

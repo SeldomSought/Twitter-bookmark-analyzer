@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analysis History</title>
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <a href="#" class="back-link" id="back-link">← Back</a>
+        <h1>📜 Analysis History</h1>
+        <p class="subtitle">Your consciousness evolution over time</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div id="loading" class="loading">
+        <div class="loader"></div>
+        <p>Loading history...</p>
+      </div>
+
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">📭</div>
+        <h2>No Analyses Yet</h2>
+        <p>Run your first analysis to start tracking your consciousness evolution.</p>
+        <button id="btn-start" class="btn-primary">Analyze Bookmarks</button>
+      </div>
+
+      <div id="history-list" class="history-list hidden"></div>
+    </main>
+
+    <footer class="footer">
+      <button id="btn-clear" class="btn-danger hidden">Clear All History</button>
+    </footer>
+  </div>
+
+  <script src="history.js"></script>
+</body>
+</html>
