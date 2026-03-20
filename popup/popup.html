@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmark Mirror</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">◈</div>
+      <h1>Bookmark Mirror</h1>
+      <p class="subtitle">Your conscious algorithm, decoded</p>
+    </header>
+
+    <!-- Idle State -->
+    <div id="state-idle" class="state active">
+      <p class="description">Analyze your Twitter/X bookmarks to reveal your psychological profile — what you save is who you are.</p>
+      <button id="btn-start" class="btn-primary">Analyze My Bookmarks</button>
+      <p class="privacy-note">100% local. Your data never leaves your device.</p>
+    </div>
+
+    <!-- Scraping State -->
+    <div id="state-scraping" class="state">
+      <div class="progress-section">
+        <div class="spinner"></div>
+        <div class="progress-info">
+          <span class="progress-label">Scanning bookmarks...</span>
+          <span class="progress-count" id="bookmark-count">0</span>
+          <span class="progress-label">captured</span>
+        </div>
+        <div class="elapsed" id="elapsed-time">0:00</div>
+      </div>
+      <button id="btn-stop" class="btn-secondary">Stop &amp; Generate Results</button>
+      <p class="hint">You can continue browsing. Analysis runs in the background.</p>
+    </div>
+
+    <!-- Analyzing State -->
+    <div id="state-analyzing" class="state">
+      <div class="progress-section">
+        <div class="spinner"></div>
+        <p class="progress-label">Building your psychological profile...</p>
+      </div>
+    </div>
+
+    <!-- Complete State -->
+    <div id="state-complete" class="state">
+      <div class="complete-icon">✦</div>
+      <p class="complete-text">Profile generated from <span id="final-count">0</span> bookmarks</p>
+      <button id="btn-results" class="btn-primary">View Your Profile</button>
+      <button id="btn-new" class="btn-secondary">Run New Analysis</button>
+    </div>
+
+    <!-- Error State -->
+    <div id="state-error" class="state">
+      <div class="error-icon">⚠</div>
+      <p class="error-text" id="error-text">Something went wrong.</p>
+      <button id="btn-retry" class="btn-secondary">Try Again</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

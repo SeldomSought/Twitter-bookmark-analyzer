@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmark Mirror — Your Profile</title>
+  <link rel="stylesheet" href="results.css">
+</head>
+<body>
+  <div id="loading" class="loading">
+    <div class="loading-spinner"></div>
+    <p>Composing your profile...</p>
+  </div>
+
+  <main id="main" class="main hidden">
+
+    <!-- Hero: Archetype -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-icon" id="archetype-icon">🧭</div>
+        <div class="hero-label">You are</div>
+        <h1 class="hero-title" id="archetype-name">The Seeker</h1>
+        <p class="hero-desc" id="archetype-desc"></p>
+        <div class="hero-secondary" id="archetype-secondary"></div>
+        <div class="hero-tagline" id="tagline"></div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+      <div class="stat-item"><span class="stat-val" id="stat-bookmarks">0</span><span class="stat-label">Bookmarks</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-authors">0</span><span class="stat-label">Voices</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-topics">0</span><span class="stat-label">Topics</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-diversity">0%</span><span class="stat-label">Diversity</span></div>
+      <div class="stat-item"><span class="stat-val" id="stat-span">—</span><span class="stat-label">Time Span</span></div>
+    </section>
+
+    <!-- Core Narrative -->
+    <section class="card narrative-card">
+      <h2 class="card-title">Your Story</h2>
+      <p class="narrative-text" id="narrative"></p>
+    </section>
+
+    <!-- Psychological Drives -->
+    <section class="card">
+      <h2 class="card-title">Core Drives</h2>
+      <p class="card-subtitle">What compels you to save</p>
+      <div id="drives-list" class="drives-list"></div>
+    </section>
+
+    <!-- Cognitive Style -->
+    <section class="card">
+      <h2 class="card-title">Cognitive Style</h2>
+      <div class="cognitive-header">
+        <div class="cognitive-blend" id="cognitive-blend"></div>
+        <p class="cognitive-desc" id="cognitive-desc"></p>
+      </div>
+      <div id="cognitive-bars" class="bar-chart"></div>
+    </section>
+
+    <!-- Emotional Landscape -->
+    <section class="card">
+      <h2 class="card-title">Emotional Landscape</h2>
+      <div class="emotional-tone" id="emotional-tone"></div>
+      <div id="emotional-dims" class="bar-chart"></div>
+      <div id="emotional-draws" class="draws-list"></div>
+    </section>
+
+    <!-- Topic Map -->
+    <section class="card">
+      <h2 class="card-title">Interest Map</h2>
+      <p class="card-subtitle">What captures your attention, ranked by signal strength</p>
+      <div id="topic-chart" class="topic-chart"></div>
+    </section>
+
+    <!-- Topic Clusters -->
+    <section class="card" id="clusters-section">
+      <h2 class="card-title">Cross-Domain Connections</h2>
+      <p class="card-subtitle">Topics you uniquely combine</p>
+      <div id="clusters-list" class="clusters-list"></div>
+    </section>
+
+    <!-- Intellectual Character -->
+    <section class="card">
+      <h2 class="card-title">Intellectual Character</h2>
+      <div id="intellect-grid" class="intellect-grid"></div>
+    </section>
+
+    <!-- OCEAN Big Five Personality -->
+    <section class="card" id="ocean-section">
+      <h2 class="card-title">Big Five Personality Profile</h2>
+      <p class="card-subtitle">Inferred from your bookmark patterns — the most validated model in personality psychology</p>
+      <div id="ocean-top-trait" class="ocean-top-trait"></div>
+      <div id="ocean-bars" class="bar-chart"></div>
+      <div id="ocean-interpretation" class="ocean-interpretation"></div>
+    </section>
+
+    <!-- Schwartz Values -->
+    <section class="card" id="schwartz-section">
+      <h2 class="card-title">Core Values Profile</h2>
+      <p class="card-subtitle">Based on Schwartz (1992) Basic Human Values Theory — what fundamentally motivates you</p>
+      <div id="schwartz-dominant" class="schwartz-dominant"></div>
+      <div id="schwartz-bars" class="bar-chart"></div>
+    </section>
+
+    <!-- Linguistic Profile -->
+    <section class="card" id="linguistic-section">
+      <h2 class="card-title">Linguistic Signature</h2>
+      <p class="card-subtitle">How you think and communicate — derived from LIWC psycholinguistic framework</p>
+      <div id="linguistic-grid" class="intellect-grid"></div>
+    </section>
+
+    <!-- Social Orientation -->
+    <section class="card">
+      <h2 class="card-title">Social Orientation</h2>
+      <div id="social-content" class="social-content"></div>
+    </section>
+
+    <!-- Hidden Patterns -->
+    <section class="card" id="patterns-section">
+      <h2 class="card-title">Hidden Patterns</h2>
+      <p class="card-subtitle">Things your bookmarks reveal that you might not notice</p>
+      <div id="patterns-list" class="patterns-list"></div>
+    </section>
+
+    <!-- Blind Spots -->
+    <section class="card" id="blindspots-section">
+      <h2 class="card-title">Blind Spots</h2>
+      <p class="card-subtitle">Dimensions conspicuously absent from your conscious algorithm</p>
+      <div id="blindspots-list" class="blindspots-list"></div>
+    </section>
+
+    <!-- Trusted Voices -->
+    <section class="card">
+      <h2 class="card-title">Trusted Voices</h2>
+      <p class="card-subtitle">The minds you return to most</p>
+      <div id="authors-list" class="authors-list"></div>
+    </section>
+
+    <!-- Temporal Profile -->
+    <section class="card">
+      <h2 class="card-title">Temporal Rhythm</h2>
+      <div class="temporal-header">
+        <div class="temporal-persona" id="temporal-persona"></div>
+        <div class="temporal-meta">
+          <span>Peak: <strong id="temporal-peak-hour"></strong></span>
+          <span>Day: <strong id="temporal-peak-day"></strong></span>
+          <span>Trend: <strong id="temporal-trend"></strong></span>
+        </div>
+      </div>
+      <div id="hourly-chart" class="hourly-chart"></div>
+    </section>
+
+    <!-- Information Diet -->
+    <section class="card">
+      <h2 class="card-title">Information Diet</h2>
+      <div class="diet-header">
+        <span class="diet-format" id="diet-format"></span>
+        <span class="diet-depth">Depth score: <strong id="diet-depth">0</strong>/100</span>
+      </div>
+      <div id="diet-breakdown" class="diet-breakdown"></div>
+      <div id="diet-domains" class="domains-list"></div>
+    </section>
+
+    <!-- Vocabulary -->
+    <section class="card">
+      <h2 class="card-title">Vocabulary Profile</h2>
+      <div class="vocab-stats" id="vocab-stats"></div>
+      <div id="word-cloud" class="word-cloud"></div>
+      <div id="hashtag-list" class="hashtag-list"></div>
+    </section>
+
+    <!-- Measurable Stats -->
+    <section class="card">
+      <h2 class="card-title">By The Numbers</h2>
+      <div id="numbers-grid" class="numbers-grid"></div>
+    </section>
+
+    <!-- Actions -->
+    <section class="actions">
+      <button id="btn-export" class="btn-action">Export Profile (JSON)</button>
+      <button id="btn-new" class="btn-action btn-outline">Run New Analysis</button>
+    </section>
+
+    <footer class="footer">
+      <p>Bookmark Mirror v2.0 — Your conscious algorithm, decoded.</p>
+      <p class="footer-note">All analysis runs locally. Your data never leaves your device.</p>
+    </footer>
+  </main>
+
+  <script src="results.js"></script>
+</body>
+</html>
