@@ -246,6 +246,8 @@ class InferenceEngine {
     this.oceanSignals = { openness: 0, conscientiousness: 0, extraversion: 0, agreeableness: 0, neuroticism: 0 };
     // New: views tracking for mainstream vs niche analysis
     this.viewTotals = { total: 0, count: 0 };
+    // Engagement distribution — niche signal vs mainstream reach
+    this.engagementBuckets = { sub100: 0, sub500: 0, sub5k: 0, above5k: 0 };
   }
 
   processBatch(batch) {
@@ -364,6 +366,13 @@ class InferenceEngine {
       this.viewTotals.count++;
     }
 
+    // Engagement bucket classification
+    const likes = item.metrics?.likes || 0;
+    if (likes < 100) this.engagementBuckets.sub100++;
+    else if (likes < 500) this.engagementBuckets.sub500++;
+    else if (likes < 5000) this.engagementBuckets.sub5k++;
+    else this.engagementBuckets.above5k++;
+
     // ── Sentence counts ──
     if (item.sentenceCount) this.sentenceCounts.push(item.sentenceCount);
 
@@ -475,6 +484,7 @@ class InferenceEngine {
       const blindSpots = this._identifyBlindSpots(topics);
       const coreNarrative = this._buildCoreNarrative(psychProfile, topics, cognitiveStyle, emotionalLandscape);
       const measurableStats = this._buildMeasurableStats(topics, authors, temporal, vocabulary);
+      const engagementProfile = this._buildEngagementProfile();
       // New psychometric dimensions
       const oceanProfile = this._buildOCEANProfile(topics, vocabulary, temporal);
       const schwartzValues = this._buildSchwartzValues(topics);
@@ -508,6 +518,7 @@ class InferenceEngine {
         schwartzValues,
         linguisticProfile,
         topicVelocity,
+        engagementProfile,
         contentPatterns: this.contentPatterns,
         sentimentSignals: this.sentimentSignals,
         mediaStats: this.mediaStats
@@ -1110,13 +1121,49 @@ class InferenceEngine {
   }
 
   // ── Measurable Stats ──
+  _buildEngagementProfile() {
+    const n = this.bookmarks.length || 1;
+    const eb = this.engagementBuckets;
+    const nichePercent = Math.round(((eb.sub100 + eb.sub500) / n) * 100);
+    const viralPercent = Math.round((eb.above5k / n) * 100);
+    let label, insight;
+    if (nichePercent > 60) {
+      label = 'Signal Hunter';
+      insight = `${nichePercent}% of your saves had under 500 likes — you consistently find value before the crowd arrives.`;
+    } else if (viralPercent > 40) {
+      label = 'Trend Watcher';
+      insight = `${viralPercent}% of your saves had over 5,000 likes — you track what moves collective attention.`;
+    } else if (nichePercent > 40) {
+      label = 'Underground Scout';
+      insight = `You lean toward lower-engagement content — ${nichePercent}% of your saves are from the margins, not the mainstream.`;
+    } else {
+      label = 'Balanced Curator';
+      insight = 'Your saves span the full engagement spectrum — neither chasing virality nor deliberately avoiding it.';
+    }
+    return {
+      label, insight, nichePercent, viralPercent,
+      buckets: [
+        { label: 'Under 100 likes', count: eb.sub100, pct: Math.round((eb.sub100 / n) * 100) },
+        { label: '100–500 likes',   count: eb.sub500, pct: Math.round((eb.sub500 / n) * 100) },
+        { label: '500–5K likes',    count: eb.sub5k,  pct: Math.round((eb.sub5k  / n) * 100) },
+        { label: '5K+ likes',       count: eb.above5k, pct: Math.round((eb.above5k / n) * 100) }
+      ]
+    };
+  }
+
   _buildMeasurableStats(topics, authors, temporal, vocabulary) {
+    const totalWords = this.wordCounts.reduce((a, b) => a + b, 0);
+    const readingMinutes = Math.round(totalWords / 200);
+    const span = this._getTimeSpan();
+    const velocityPerWeek = span && span.days > 7
+      ? parseFloat((this.bookmarks.length / (span.days / 7)).toFixed(1))
+      : null;
     return {
       totalBookmarks: this.bookmarks.length,
       uniqueAuthors: Object.keys(this.authorMap).length,
       uniqueTopics: topics.ranked.length,
       topicDiversity: topics.diversityScore,
-      avgBookmarkWords: Math.round(this.wordCounts.reduce((a, b) => a + b, 0) / (this.bookmarks.length || 1)),
+      avgBookmarkWords: Math.round(totalWords / (this.bookmarks.length || 1)),
       longestBookmark: Math.max(...this.wordCounts, 0),
       shortestBookmark: Math.min(...this.wordCounts, 0),
       vocabRichness: vocabulary.richness,
@@ -1129,7 +1176,11 @@ class InferenceEngine {
       peakHour: temporal.peakHourLabel,
       peakDay: temporal.peakDay,
       avgLikesPerBookmark: Math.round(this.metricTotals.likes / (this.metricTotals.count || 1)),
-      timeSpan: this._getTimeSpan()
+      timeSpan: span,
+      // Wrapped-style headline stats
+      readingTimeDisplay: readingMinutes >= 60 ? `${(readingMinutes / 60).toFixed(1)}h` : `${readingMinutes}m`,
+      totalReadingMinutes: readingMinutes,
+      velocityPerWeek
     };
   }
 

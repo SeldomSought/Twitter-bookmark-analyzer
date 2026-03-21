@@ -75,6 +75,7 @@ class ResultsRenderer {
 
     this.renderHero(r.psychProfile, r.coreNarrative);
     this.renderStatsBar(r.summary, r.topics);
+    this.renderHeroCards(r.measurableStats, r.topics);
     this.renderNarrative(r.coreNarrative);
     this.renderDrives(r.psychProfile?.drives);
     this.renderCognitive(r.cognitiveStyle);
@@ -86,6 +87,7 @@ class ResultsRenderer {
     this.renderSchwartzValues(r.schwartzValues);
     this.renderLinguistic(r.linguisticProfile);
     this.renderSocial(r.socialOrientation);
+    this.renderEngagementProfile(r.engagementProfile);
     this.renderPatterns(r.hiddenPatterns);
     this.renderBlindSpots(r.blindSpots);
     this.renderAuthors(r.authors);
@@ -282,7 +284,14 @@ class ResultsRenderer {
   renderAuthors(authors) {
     const container = document.getElementById('authors-list');
     if (!authors?.length) { container.innerHTML = '<p class="empty-state">No author data.</p>'; return; }
-    container.innerHTML = authors.slice(0, 15).map((a, i) => `
+
+    const top = authors[0];
+    const headline = `<div class="author-headline">
+      <span class="author-headline-num">${top.count}</span>
+      <span class="author-headline-text">saves from @${top.handle} — your most trusted voice</span>
+    </div>`;
+
+    const list = authors.slice(0, 15).map((a, i) => `
       <div class="author-item">
         <span class="author-rank">${i + 1}</span>
         <div class="author-info">
@@ -293,6 +302,52 @@ class ResultsRenderer {
           <div class="author-count">${a.count}</div>
           <div class="author-pct">${a.percentageOfBookmarks}%</div>
         </div>
+      </div>
+    `).join('');
+
+    container.innerHTML = headline + list;
+  }
+
+  // ── Hero Cards ──
+  renderHeroCards(stats, topics) {
+    if (!stats) return;
+    const rtEl = document.getElementById('hero-reading-time');
+    if (rtEl) rtEl.textContent = stats.readingTimeDisplay || '—';
+
+    const topTopic = topics?.ranked?.[0];
+    const topicNameEl = document.getElementById('hero-top-topic-name');
+    const topicLabelEl = document.getElementById('hero-top-topic-label');
+    if (topicNameEl && topTopic) {
+      topicNameEl.textContent = this.cap(topTopic.name);
+      if (topicLabelEl) topicLabelEl.textContent = `${topTopic.percentage}% of your saves`;
+    }
+
+    const velEl = document.getElementById('hero-velocity');
+    if (velEl) velEl.textContent = stats.velocityPerWeek != null ? stats.velocityPerWeek : '—';
+  }
+
+  // ── Engagement Profile ──
+  renderEngagementProfile(profile) {
+    const section = document.getElementById('engagement-section');
+    if (!profile) { section?.classList.add('hidden'); return; }
+
+    const labelEl = document.getElementById('engagement-label');
+    if (labelEl) labelEl.textContent = profile.label;
+
+    const insightEl = document.getElementById('engagement-insight');
+    if (insightEl) insightEl.textContent = profile.insight;
+
+    const barsEl = document.getElementById('engagement-bars');
+    if (!barsEl || !profile.buckets?.length) return;
+
+    const maxPct = Math.max(...profile.buckets.map(b => b.pct), 1);
+    barsEl.innerHTML = profile.buckets.map(b => `
+      <div class="eng-row">
+        <span class="eng-label">${b.label}</span>
+        <div class="eng-bar-track">
+          <div class="eng-bar-fill" style="width:${(b.pct / maxPct) * 100}%"></div>
+        </div>
+        <span class="eng-pct">${b.pct}%</span>
       </div>
     `).join('');
   }
@@ -320,6 +375,27 @@ class ResultsRenderer {
     document.getElementById('hourly-chart').innerHTML =
       `<div class="hourly-chart" style="display:flex;align-items:flex-end;gap:2px;height:80px">${barsHtml}</div>
        <div class="hour-labels" style="display:flex;gap:2px;margin-top:4px">${labels.join('')}</div>`;
+
+    // Day of week chart
+    const dayEl = document.getElementById('daily-chart');
+    if (dayEl && temporal.dailyDistribution?.length) {
+      const maxD = Math.max(...temporal.dailyDistribution, 1);
+      dayEl.innerHTML = temporal.dailyDistribution.map((val, d) =>
+        `<div class="day-bar${d === temporal.dailyDistribution.indexOf(Math.max(...temporal.dailyDistribution)) ? ' peak' : ''}" style="height:${Math.max((val / maxD) * 100, 3)}%" title="${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d]}: ${val}"></div>`
+      ).join('');
+    }
+
+    // Velocity row
+    const velRow = document.getElementById('velocity-row');
+    if (velRow && temporal.monthlyDistribution) {
+      const monthEntries = Object.entries(temporal.monthlyDistribution).sort();
+      const peakMonth = monthEntries.sort((a, b) => b[1] - a[1])[0];
+      velRow.innerHTML = peakMonth ? `
+        <div class="vel-stat"><span class="vel-num">${peakMonth[1]}</span><span class="vel-label">Peak Month</span></div>
+        <div class="vel-stat"><span class="vel-num">${monthEntries.length}</span><span class="vel-label">Months Active</span></div>
+        <div class="vel-stat"><span class="vel-num">${this.cap(temporal.trend || 'steady')}</span><span class="vel-label">Trend</span></div>
+      ` : '';
+    }
   }
 
   // ── Information Diet ──
@@ -359,7 +435,13 @@ class ResultsRenderer {
 
     const words = vocab.topWords || [];
     const maxCount = words[0]?.count || 1;
-    document.getElementById('word-cloud').innerHTML = words.slice(0, 40).map(w => {
+    const top5 = words.slice(0, 5);
+    const rest = words.slice(5, 40);
+    const cloudEl = document.getElementById('word-cloud');
+    const callouts = top5.length ? `<div class="word-callouts">${top5.map(w =>
+      `<div class="word-callout"><span class="word-callout-count">${w.count}×</span><span class="word-callout-word">${w.word}</span></div>`
+    ).join('')}</div>` : '';
+    cloudEl.innerHTML = callouts + rest.map(w => {
       const ratio = w.count / maxCount;
       const cls = ratio > 0.6 ? 'large' : ratio > 0.3 ? 'medium' : '';
       return `<span class="word-tag ${cls}">${w.word}<sup style="font-size:9px;opacity:0.5"> ${w.count}</sup></span>`;
