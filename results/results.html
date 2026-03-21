@@ -35,6 +35,22 @@
       <div class="stat-item"><span class="stat-val" id="stat-span">—</span><span class="stat-label">Time Span</span></div>
     </section>
 
+    <!-- Hero Stats (Wrapped-style big numbers) -->
+    <div class="hero-cards" id="hero-cards">
+      <div class="hero-card">
+        <div class="hero-card-num" id="hero-reading-time">—</div>
+        <div class="hero-card-label">Reading Material</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-num" id="hero-top-topic-name">—</div>
+        <div class="hero-card-label" id="hero-top-topic-label">Top Topic</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-num" id="hero-velocity">—</div>
+        <div class="hero-card-label">Avg / Week</div>
+      </div>
+    </div>
+
     <!-- Core Narrative -->
     <section class="card narrative-card">
       <h2 class="card-title">Your Story</h2>
@@ -116,6 +132,15 @@
       <div id="social-content" class="social-content"></div>
     </section>
 
+    <!-- Curation Signal -->
+    <section class="card" id="engagement-section">
+      <h2 class="card-title">Curation Signal</h2>
+      <p class="card-subtitle">What your saves reveal about how you source information</p>
+      <div class="engagement-label" id="engagement-label">—</div>
+      <p class="engagement-insight" id="engagement-insight"></p>
+      <div class="engagement-buckets" id="engagement-bars"></div>
+    </section>
+
     <!-- Hidden Patterns -->
     <section class="card" id="patterns-section">
       <h2 class="card-title">Hidden Patterns</h2>
@@ -149,6 +174,14 @@
         </div>
       </div>
       <div id="hourly-chart" class="hourly-chart"></div>
+      <div class="day-chart-section">
+        <div class="day-chart-title">Day of Week</div>
+        <div id="daily-chart" class="daily-chart"></div>
+        <div class="day-labels">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+      </div>
+      <div class="velocity-row" id="velocity-row"></div>
     </section>
 
     <!-- Information Diet -->
